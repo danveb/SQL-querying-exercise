@@ -145,7 +145,7 @@ SELECT name, population, area
     -- Russia	146000000	17125242
     -- United States	318320000	9826675
 
-8.
+-- 8.
 -- Exclusive OR (XOR). Show the countries that are big by area (more than 3 million) or big by population (more than 250 million) but not both. Show name, population and area.
 
 -- Australia has a big area but a small population, it should be included.
@@ -153,7 +153,152 @@ SELECT name, population, area
 -- China has a big population and big area, it should be excluded.
 -- United Kingdom has a small population and a small area, it should be excluded.
 
--- SELECT name, population, area 
---     FROM world 
---     WHERE area > 3000000 OR population > 250000000; 
+SELECT name, population, area 
+FROM world 
+WHERE (population > 250000000 AND area < 3000000)
+   OR (population < 250000000 AND area > 3000000)
+
+-- 9.
+-- Show the name and population in millions and the GDP in billions for the countries of the continent 'South America'. Use the ROUND function to show the values to two decimal places.
+
+-- For South America show population in millions and GDP in billions both to 2 decimal places.
+-- Millions and billions
+
+SELECT name, ROUND(population/1000000, 2) AS population_millions, ROUND(GDP/1000000000, 2) AS GDP_billions
+    FROM world 
+    WHERE continent = 'South America'; 
+    -- name	population_mi..	GDP_billions
+    -- Argentina	42.67	477.03
+    -- Bolivia	10.03	27.04
+    -- Brazil	202.79	2254.11
+    -- Chile	17.77	268.31
+    -- Colombia	47.66	369.81
+    -- Ecuador	15.77	87.5
+    -- Guyana	0.78	2.85
+    -- Paraguay	6.78	25.94
+    -- Peru	30.48	204.68
+    -- Saint Vincent and the Grenadines	0.11	0.69
+    -- Suriname	0.53	5.01
+    -- Uruguay	3.29	49.92
+    -- Venezuela	28.95	382.42
+
+-- 10.
+-- Show the name and per-capita GDP for those countries with a GDP of at least one trillion (1000000000000; that is 12 zeros). Round this value to the nearest 1000.
+
+-- Show per-capita GDP for the trillion dollar countries to the nearest $1000.
+
+SELECT name, ROUND(gdp/population, -3) 
+    FROM world
+    WHERE gdp >= 1000000000000
+    -- name	
+    -- Australia	66000
+    -- Brazil	11000
+    -- Canada	45000
+    -- China	6000
+    -- France	40000
+    -- Germany	42000
+    -- India	2000
+    -- Italy	33000
+    -- Japan	47000
+    -- Mexico	10000
+    -- Russia	14000
+    -- South Korea	22000
+    -- Spain	28000
+    -- United Kingdom	39000
+    -- United States	51000
+
+-- 11.
+-- Greece has capital Athens.
+
+-- Each of the strings 'Greece', and 'Athens' has 6 characters.
+
+-- Show the name and capital where the name and the capital have the same number of characters.
+
+-- You can use the LENGTH function to find the number of characters in a string
+
+SELECT name, capital
+    FROM world 
+    WHERE LEN(name) = LEN(capital)
+    -- name	capital
+    -- Algeria	Algiers
+    -- Angola	Luanda
+    -- Armenia	Yerevan
+    -- Botswana	Gaborone
+    -- Canada	Ottowa
+    -- Djibouti	Djibouti
+    -- Egypt	Cairo
+    -- Estonia	Tallinn
+    -- Fiji	Suva
+    -- Gambia	Banjul
+    -- Georgia	Tbilisi
+    -- Ghana	Accra
+    -- Greece	Athens
+    -- Luxembourg	Luxembourg
+    -- Mauritania	Nouakchott
+    -- Paraguay	Asunción
+    -- Peru	Lima
+    -- Poland	Warsaw
+    -- Russia	Moscow
+    -- Rwanda	Kigali
+    -- San Marino	San Marino
+    -- Singapore	Singapore
+    -- Taiwan	Taipei
+    -- Togo	Lomé
+    -- Turkey	Ankara
+    -- Zambia	Lusaka
+
+-- 12.
+-- The capital of Sweden is Stockholm. Both words start with the letter 'S'.
+
+-- Show the name and the capital where the first letters of each match. Don't include countries where the name and the capital are the same word.
+-- You can use the function LEFT to isolate the first character.
+-- You can use <> as the NOT EQUALS operator.
+    SELECT name, capital
+        FROM world
+        WHERE LEFT(name,1) = LEFT(capital,1)
+        AND name <> capital
+        -- name	capital
+        -- Algeria	Algiers
+        -- Andorra	Andorra la Vella
+        -- Barbados	Bridgetown
+        -- Belize	Belmopan
+        -- Brazil	Brasília
+        -- Brunei	Bandar Seri Begawan
+        -- Burundi	Bujumbura
+        -- Guatemala	Guatemala City
+        -- Guyana	Georgetown
+        -- Kuwait	Kuwait City
+        -- Maldives	Malé
+        -- Marshall Islands	Majuro
+        -- Mexico	Mexico City
+        -- Monaco	Monaco-Ville
+        -- Mozambique	Maputo
+        -- Niger	Niamey
+        -- Panama	Panama City
+        -- Papua New Guinea	Port Moresby
+        -- Sao Tomé and Príncipe	São Tomé
+        -- South Korea	Seoul
+        -- Sri Lanka	Sri Jayawardenepura Kotte
+        -- Sweden	Stockholm
+        -- Taiwan	Taipei
+        -- Tunisia	Tunis
+
+-- 13.
+-- Equatorial Guinea and Dominican Republic have all of the vowels (a e i o u) in the name. They don't count because they have more than one word in the name.
+
+-- Find the country that has all the vowels and no spaces in its name.
+
+-- You can use the phrase name NOT LIKE '%a%' to exclude characters from your results.
+-- The query shown misses countries like Bahamas and Belarus because they contain at least one 'a'
+
+SELECT name
+    FROM world
+    WHERE name LIKE '%a%'
+    AND name LIKE '%e%'
+    AND name LIKE '%i%'
+    AND name LIKE '%o%'
+    AND name LIKE '%u%'
+    AND name NOT LIKE '% %'
+    -- name
+    -- Mozambique
 
