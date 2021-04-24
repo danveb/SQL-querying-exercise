@@ -1,5 +1,18 @@
 -- Comments in SQL Start with dash-dash --
 
+-- crud.sql (Instructions to run SQL commands)
+-- $ psql < seed_products.sql 
+-- $ psql products_db 
+-- run the queries in Terminal
+-- products_db=# \d products
+                                     Table "public.products"
+     Column      |       Type       | Collation | Nullable |               Default                
+-----------------+------------------+-----------+----------+--------------------------------------
+ id              | integer          |           | not null | nextval('products_id_seq'::regclass)
+ name            | text             |           | not null | 
+ price           | double precision |           |          | 
+ can_be_returned | boolean          |           | not null | 
+
 -- 1. Add a product to the table with the name of “chair”, price of 44.00, and can_be_returned of false.
 
 INSERT INTO products (name, price, can_be_returned)
